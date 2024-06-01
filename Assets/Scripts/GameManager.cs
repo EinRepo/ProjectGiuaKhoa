@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
+        timer += Time.unscaledDeltaTime; //Timer for increase timescale
 
 
         IncreaseGameSpeed();
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     {
         if (timer > 10f)
         {
-            Time.timeScale += 0.05f;
+            Time.timeScale += 0.1f;
             timer = 0;
         }
     }

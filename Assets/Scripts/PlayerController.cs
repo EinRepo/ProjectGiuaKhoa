@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
     private float jumpSpeedBoost = 1;
+    private float jumpSpeedBoostDecayRate = 3;
 
 
     private Rigidbody2D rb;
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private float wallCheckDistance = 0.2f;
     private bool isTouchingWall;
     private bool isDead = false;
+    private bool invulnerable;
+
+    public bool Invulnerable => invulnerable;
 
 
     private void Awake()
@@ -24,7 +28,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         MovePlayer();
+        CheckInvulnerable();
+
         if (isDead)
         {
             this.enabled = false;
@@ -40,21 +47,18 @@ public class PlayerController : MonoBehaviour
 
         //move the player upwards
         rb.velocity = new Vector2(rb.velocity.x, moveSpeed * jumpSpeedBoost);
-        jumpSpeedBoost = Mathf.Lerp(jumpSpeedBoost, 1, Time.deltaTime);
+        jumpSpeedBoost = Mathf.Lerp(jumpSpeedBoost, 1, Time.deltaTime * jumpSpeedBoostDecayRate);
 
 
         //push the player to the wall so they dont drift away
-        if (transform.position.x > 0)
-        {
-            rb.AddForce(Vector2.right * moveSpeed * Time.deltaTime); //since this force is called many times, i added delta time to reduce the force and keep it consistant
-        }
-        else
-        {
-            rb.AddForce(Vector2.left * moveSpeed * Time.deltaTime);
-        }
-
-
-
+        //if (transform.position.x > 0)
+        //{
+        //    rb.AddForce(Vector2.right * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    rb.AddForce(Vector2.left * Time.deltaTime);
+        //}
 
         //jump
         if (Input.GetButtonDown("Jump") && isTouchingWall)
@@ -62,7 +66,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
             float jumpDirection = isTouchingRightWall ? -1 : 1;
             rb.AddForce(Vector2.right * jumpDirection * jumpForce, ForceMode2D.Impulse);
-            jumpSpeedBoost = 2;
+            jumpSpeedBoost = 3;
             transform.localScale = new Vector3(transform.localScale.x, -1 * transform.localScale.y, transform.localScale.z);
         }
 
@@ -73,16 +77,29 @@ public class PlayerController : MonoBehaviour
         return isDead;
     }
 
+    public void CheckInvulnerable()
+    {
+        if (rb.velocity.x <= -0.01f || rb.velocity.x >= 0.01f)
+        {
+            invulnerable = true;
+        }
+        else
+        {
+            invulnerable = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Obstacle")
+        if ((collision.gameObject.tag == "Obstacle" || collision.gameObject.tag == "Enemy") && invulnerable == false)
         {
             isDead = true;
             moveSpeed = 0;
             animator.SetTrigger("isDead");
-
         }
+
     }
+
 
 
 }

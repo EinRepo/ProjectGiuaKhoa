@@ -647,14 +647,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772865932}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c573e26c134ea7340b9cb5e69c48f6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   batPrefab: {fileID: 7527637436671324195, guid: 49c790efe5ea5ea458b7c7909302d358, type: 3}
-  mainCamera: {fileID: 0}
-  player: {fileID: 935782791}
+  mainCamera: {fileID: 519420032}
   spawnInterval: 10
 --- !u!1 &779750119
 GameObject:
@@ -1434,6 +1433,14 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 935782791}
+    - target: {fileID: 5824013129181762863, guid: c7315eddd029f724c9cc0d0bcc4ab3a0, type: 3}
+      propertyPath: m_SurfaceArc
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681905233209379556, guid: c7315eddd029f724c9cc0d0bcc4ab3a0, type: 3}
+      propertyPath: m_SurfaceArc
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1689,8 +1696,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 68.7, y: 25}
-  m_SizeDelta: {x: 158.63531, y: 50}
+  m_AnchoredPosition: {x: 83.20001, y: 28.199951}
+  m_SizeDelta: {x: 195.8983, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1779932242
 MonoBehaviour:
